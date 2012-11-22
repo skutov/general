@@ -1,1 +1,14 @@
-Addressing modes
+What addressing modes would be required in an instruction set if it were to be used to
+implement this program.
+
+The addressing modes required for the program to operate would be at a minimum an absolute addressing scheme to be able to read and write to the I/O ports and a relative addressing scheme to be able to access the array of values based off the value retrieved from the input port.
+The absolute addressing mode operates by having the address refer to a specific area of memory, this means that no other absolute address will refer to the same place in memory, this is useful when trying to access something that is held at a fixed address, for example a special purpose register or an I/O port as used in this program. 
+
+1) Copying the code from ROM to RAM
+2) Copying data to/from IO port
+3) Obtaining data from a table in memory/rom and indexing it with the input to obtain the desired output
+4) IO can be register based, or buffer based. If it's register, no worries, if it's memory/buffer based then you need some kind of indirect access
+
+For the initialisation section where the code is copied into RAM then an indexed absolute method should be used as this would allow the code to be copied a line at a time to RAM with as little code required as possible. This would also allow the destination within RAM that the code is to be copied to to be changed on run, this could be useful if the size and/or start locaion of the array for the main section of the code changed between runs.
+During the running of the program there are three main operations that are carried out, the first is reading from the input port. This would call for an absolute addressing as the location of the I/O port would remain constant relative to the start address of the systems RAM. This would be the most basic method of accessing the I/O ports as the addresses would not have to change between runs.
+The second occasion during the main body of the code would be when reading a value from the array indexed by the value read from the input port. This would best be achieved with a base plus index addressing scheme. This would allow the starting address of the array to be stored in a register and for the value taken from the input to be passid as the index which would point to the appropriate value within the array. This form of addressing would be the most efficient as there would be the smallest number of operations required to retrieve the correct value of data.
